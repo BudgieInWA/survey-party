@@ -1,0 +1,50 @@
+# Framework and Build
+
+meteor-base@1.5.1 # Packages every Meteor app needs to have
+shell-server@0.5.0 # Server-side component of the `meteor shell` command
+hot-module-replacement@0.5.2 # Update client in development without reloading the page
+standard-minifier-css@1.9.0 # CSS minifier run for production mode
+standard-minifier-js@2.8.1 # JS minifier run for production mode
+
+# Language Support
+
+static-html@1.3.2 # Define static page content in .html files
+ecmascript@0.16.6 # Enable ECMAScript2015+ syntax in app code
+es5-shim@4.8.0 # ECMAScript 5 compatibility for older browsers
+
+
+
+deanius:promise # Promise wrappers for standard meteor client apis
+
+# Data
+
+mongo@1.16.5 # The database Meteor supports right now
+reactive-var@1.0.12 # Reactive variable for tracker
+react-meteor-data # React higher-order component for reactively tracking Meteor data
+session
+
+# Auth
+
+accounts-base@2.2.0
+accounts-password@2.2.0
+alanning:roles
+
+# Communication
+
+mdg:validated-method # Structurally define methods
+didericis:permissions-mixin # Structurally define user permissions in ValidatedMethods
+didericis:callpromise-mixin # Use ValidatedMethod#callPromise
+mdg:validation-error # Throw errors that refer to schema fields
+
+# UI
+
+jquery@1.11.1 # Makes jQuery available for bootstrap JS plugins
+fourseven:scss # Compile .scss files to css
+
+# Misc
+
+meteorhacks:picker # Server-side routing for oauth callbacks
+email@2.2.0
+
+# Unsorted (please sort and comment these)
+

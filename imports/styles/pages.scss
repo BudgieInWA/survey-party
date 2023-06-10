@@ -1,0 +1,15 @@
+.emoji-icon {
+  font-size: 32px;
+  text-align: center;
+  opacity: 0.8;
+}
+.emoji-icon:after {
+  content: "";
+
+  position: absolute;
+  inset: 17px;
+
+  background: rgba(100, 50, 40, 0.9);
+  border: 2px solid rgba(10,50,40, .8);
+  border-radius: 20px;
+}

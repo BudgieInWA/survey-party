@@ -20,9 +20,16 @@ Meteor.methods({
       }
     } });
   },
+
+  'party.new'({ }) {
+    // DEBUG Currently clears out everything.
+    // TODO filter to keep recently active
+    PartierCollection.remove({});
+  }
 });
 
 if (Meteor.isServer) {
+  PartierCollection.remove({});
   Meteor.publish('partier.list', function() {
     return PartierCollection.find({});
   });

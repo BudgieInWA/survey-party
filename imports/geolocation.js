@@ -1,10 +1,11 @@
+import { LatLng } from 'leaflet';
 
-const initialLocation = [-31.956, 115.861]; // Perth
+const initialLocation = new LatLng(-31.956, 115.861); // Perth
 
 const randomLocation = () => {
-  initialLocation[0] += (Math.random() - 0.5) * 0.03;
-  initialLocation[1] += (Math.random() - 0.5) * 0.03;
-  return [...initialLocation];
+  initialLocation.lat += (Math.random() - 0.5) * 0.01;
+  initialLocation.lng += (Math.random() - 0.5) * 0.01;
+  return initialLocation.clone();
 };
 
 export default randomLocation;

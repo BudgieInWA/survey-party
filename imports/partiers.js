@@ -3,7 +3,7 @@ import { Mongo } from 'meteor/mongo';
 
 import randomProfile from './randomProfile';
 
-// All geo coordinates are [lng, lat].
+// Geo coordinates are [lng, lat] in mongo.
 
 export const PartierCollection = new Mongo.Collection('partier');
 
@@ -12,11 +12,11 @@ Meteor.methods({
     return PartierCollection.insert({ ...randomProfile() });
   },
 
-  'partier.setLocation'({ _id, location }) {
+  'partier.setLocation'({ _id, coordinates }) {
     return PartierCollection.update({ _id }, {$set: {
       location: {
         type: 'Point',
-        coordinates: location,
+        coordinates,
       }
     } });
   },

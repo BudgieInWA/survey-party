@@ -26,7 +26,7 @@ export const PartyMap = ({ userId }) => {
   const marksAreLoading = useSubscribe('mark.list');
   const marks = useFind(() => MarkCollection.find());
 
-  const updatePosition = () => Meteor.callPromise('partier.setLocation', { _id: userId, location: coords(geolocation()) });
+  const updatePosition = () => Meteor.callPromise('partier.setLocation', { _id: userId, coordinates: coords(geolocation()) });
 
   return (
     <div>

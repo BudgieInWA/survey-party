@@ -10,14 +10,14 @@ MarkCollection.History = new Mongo.Collection('mark.history');
 // TODO set up the insert trick below (on the client) by monkeypatching here.
 
 Meteor.methods({
-  'mark.addPoint'({ kind, position } = {}) {
-    if (!kind || !position) throw "missing-arg";
+  'mark.addPoint'({ kind, position: coordinates } = {}) {
+    if (!kind || !coordinates) throw "missing-arg";
 
     const mark = {
       kind,
       location: {
         type: 'Point',
-        coordinates: position,
+        coordinates,
       },
     };
     const _id = MarkCollection.insert(mark);

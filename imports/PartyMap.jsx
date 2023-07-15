@@ -19,7 +19,7 @@ import { markingIcon } from './markings';
 // const initialLocation = new LatLng(51.505, -0.09); // London
 const initialLocation = new LatLng(-31.956, 115.861); // Perth
 
-export const Hello = ({ userId }) => {
+export const PartyMap = ({ userId }) => {
   const partiersAreLoading = useSubscribe('partier.list');
   const partiers = useFind(() => PartierCollection.find());
 
@@ -108,3 +108,5 @@ const MouseGrid = ({}) => {
     <Polygon positions={bigCellBorder} pathOptions={{ stroke: false }} />
   </>;
 }
+
+export default PartyMap;

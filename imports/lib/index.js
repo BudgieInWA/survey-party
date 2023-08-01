@@ -1,4 +1,6 @@
-import { LatLng} from 'leaflet';
+import { LatLng } from 'leaflet';
+
+
 
 const latLngFromLocation = ({ type, coordinates: [lng, lat] }) => {
   if (type !== 'Point') throw 'expected point';

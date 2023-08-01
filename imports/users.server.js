@@ -12,5 +12,5 @@ Meteor.publish(null, () => {
   const userId = Meteor.userId();
   if (!userId) return;
 
-  return Meteor.users.find({ _id: userId }, { fields: { icon: 1 } });
+  return Meteor.users.find({ _id: userId }, { fields: { icon: 1, currentPartyId: 1 } });
 });

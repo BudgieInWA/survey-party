@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 
-import PartyScreen from './PartyScreen';
 import LoginScreen from './LoginScreen';
+import PartyScreen from './PartyScreen';
+import PartyListScreen from './PartyListScreen';
 
 export const App = () => {
   const user = useTracker(() => Meteor.user(), []);
@@ -19,6 +20,6 @@ export const App = () => {
         }
       </div>
     </div>
-    {user ? <PartyScreen/> : <LoginScreen/>}
+    {user ? (user.currentPartyId ? <PartyScreen/> : <PartyListScreen/>) : <LoginScreen/>}
   </>;
 };

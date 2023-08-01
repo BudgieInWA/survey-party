@@ -1,5 +1,4 @@
 import './users.server';
 
-import './partiers';
-import './marks';
-import './markings';
+import './Party';
+import './Mark';

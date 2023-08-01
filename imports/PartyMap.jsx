@@ -8,31 +8,32 @@ import { MapContainer, Marker, Polygon, Popup, TileLayer, useMap, useMapEvents, 
 import Colors from 'color-hash';
 import { cellToBoundary, cellToLatLng, latLngToCell } from 'h3-js';
 
-import { PartierCollection } from './partiers';
-import { MarkCollection } from './marks';
+import { Spinner } from '/imports/lib/components';
+
 import geolocation from './geolocation';
 import getIcon from './icons';
-import { markingIcon } from './markings';
+import Marking from './Marking';
+
+import Party from './Party';
 
 
 // Positions are LatLng except in mongo, where they are `coordinates: [lng, lat]`
 // const initialLocation = new LatLng(51.505, -0.09); // London
 const initialLocation = new LatLng(-31.956, 115.861); // Perth
 
-export const PartyMap = ({ userId }) => {
-  const partiersAreLoading = useSubscribe('partier.list');
-  const partiers = useFind(() => PartierCollection.find());
+export const PartyMap = ({ partyId, members }) => {
+  const isLoading = useSubscribe('party.marks', { _id: partyId });
+  const marks = useFind(() => Party.marks({ _id: partyId }));
 
-  const marksAreLoading = useSubscribe('mark.list');
-  const marks = useFind(() => MarkCollection.find());
-
-  const updatePosition = () => Meteor.callPromise('partier.setLocation', { _id: userId, coordinates: coords(geolocation()) });
+  const updatePosition = () => Meteor.callPromise('me.updateLocation', { coordinates: coords(geolocation()) });
+  const addMark = ({ latLng }) => Meteor.callPromise('mark.createPoint', { partyId, coordinates: coords(latLng)});
 
   return (
     <div>
+      {isLoading() && <Spinner />}
       <Button onClick={updatePosition}>Update Pos</Button>
       <MapContainer center={initialLocation} zoom={13} scrollWheelZoom={false} >
-        <MouseGrid />
+        <MouseGrid onClick={addMark} />
 
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -45,15 +46,15 @@ export const PartyMap = ({ userId }) => {
 
         {marks.map(({ _id, kind, location }) =>
           // <Marker key={_id} position={coordinates} icon={getIcon(markingIcon(kind))} />
-          <Marker key={_id} position={ll(location)} />
+          <Marker key={_id} position={ll(location)} kind={kind} />
         )}
 
-        {partiers.map(({ icon, name, location }) => {
+        {members.map(({ _id, icon, username, location, locationAt }) => {
           const pos = ll(location);
           return pos &&
-            <Marker key={name} position={ll(location)} icon={getIcon(icon)}>
+            <Marker key={_id} position={ll(location)} icon={getIcon(icon)}>
               <Popup>
-                {icon} {name}
+                {icon} {username}
               </Popup>
               {/*TODO <div style={{backgroundColor: new Colors().hex(name)}}></div>*/}
             </Marker>;
@@ -78,7 +79,7 @@ const BingLayer = ({unlock}) => {
 
 
 const lod = 12;
-const MouseGrid = ({}) => {
+const MouseGrid = ({ onClick }) => {
   const [cell, setCell] = useState(null);
   const [bigCell, setBigCell] = useState(null);
 
@@ -91,8 +92,7 @@ const MouseGrid = ({}) => {
 
     mousedown(ev) {
       const { lat, lng } = ev.latlng;
-      console.log(ev)
-      Meteor.callPromise('mark.addPoint', { kind: 'bench', position: [lng, lat]});
+      onClick?.({ latLng: new LatLng(lat, lng) })
     }
   });
 

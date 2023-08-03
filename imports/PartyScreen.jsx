@@ -24,8 +24,8 @@ const PartyScreen = () => {
         {members.map(({ _id, username, icon }) => <li key={_id}>{icon} {username}</li>)}
       </ul>
 
-      <button onClick={leaveParty}>Leave</button>
-      <button onClick={closeParty} className={}>Close</button>
+      <button onClick={leaveParty} className="btn btn-danger">Bail</button>
+      <button onClick={closeParty} className="btn btn-danger-outline">Close</button>
 
 
       <PartyMap partyId={partyId} members={members} />

@@ -2,7 +2,10 @@
   "name": "survey-party",
   "private": true,
   "scripts": {
-    "start": "meteor run --port 8432 --exclude-archs web.browser.legacy"
+    "start": "meteor run --port 8432 --exclude-archs web.browser.legacy",
+    "build": "meteor build .build",
+    "deploy": "scp ./surveyparty.tar.gz",
+
   },
   "dependencies": {
     "@babel/runtime": "^7.20.7",

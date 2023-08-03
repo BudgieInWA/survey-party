@@ -6,7 +6,7 @@ import { Spinner } from '/imports/lib/components';
 import Party from './Party';
 
 const PartyListScreen = () => {
-  const isLoading = useSubscribe('party.list');
+  const isLoading = useSubscribe('parties');
   const parties = useFind(() => Party.list(), []);
 
   return (

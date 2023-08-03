@@ -10,14 +10,16 @@ const PartyScreen = () => {
   const user = useTracker(() => Meteor.user(), []);
   const partyId = user?.currentPartyId;
 
-  let isLoading = useSubscribe('party.members', { partyId });
-  const members = useFind(() => Party.members({ partyId }));
+  const partyLoading = useSubscribe('party', partyId);
+  const party = useFind(() => Party.collection.find(partyId), [partyId]);
+  const membersLoading = useSubscribe('party.members', { partyId });
+  const members = useFind(() => Party.members({ partyId }), [partyId]);
 
   return (
     <main>
-      <h1>Survey Party 🧭</h1>
+      <h1>🧭 {party?.name}</h1>
 
-      {isLoading() && <Spinner />}
+      {membersLoading() || partyLoading() && <Spinner />}
 
       <h2>Members</h2>
       <ul>
@@ -25,8 +27,9 @@ const PartyScreen = () => {
       </ul>
 
       <button onClick={leaveParty} className="btn btn-danger">Bail</button>
-      <button onClick={closeParty} className="btn btn-danger-outline">Close</button>
-
+      {party?.ownerId === user._id &&
+        <button onClick={closeParty} className="btn btn-danger-outline">Close</button>
+      }
 
       <PartyMap partyId={partyId} members={members} />
     </main>

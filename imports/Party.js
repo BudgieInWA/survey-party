@@ -24,7 +24,8 @@ const Party = {
 };
 
 if (Meteor.isServer) {
-  Meteor.publish('party.list', () => Party.list());
+  Meteor.publish('party', (args) => Party.collection.find(args));
+  Meteor.publish('parties', () => Party.list());
 
   // TODO check that user is in party:
   Meteor.publish('party.members', (args) => Party.members(args));

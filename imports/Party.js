@@ -36,6 +36,7 @@ Meteor.methods({
     const user = Meteor.user({ fields: { name: 1 } });
     if (!user) throw new Meteor.Error('not-authorised');
 
+    console.debug(user)
     if (!name) name = `${user.username}'s Party`;
 
     return Party.collection.insert({
@@ -44,6 +45,24 @@ Meteor.methods({
       open: true,
     });
   },
+
+  'party.close'({ partyId }) {
+    // We need to get the user first
+    const user = Meteor.user({ fields: { _id: 1 } });
+    if (!user) throw new Meteor.Error('not-authorised');
+
+    // Now let's find the party by its ID
+    const party = Party.collection.findOne({ _id: partyId }, { fields: { ownerId: 1 } });
+
+    if (!party) throw new Meteor.Error('not-found');
+
+    // Checking if the user is the owner of the party
+    if (party.ownerId !== user._id) throw new Meteor.Error('not-allowed');
+
+    // Now we are sure the user is the owner, so let's close the party
+    return Party.collection.update({ _id: partyId, ownerId: user._id }, { $set: { open: false } });
+  },
+
 
   'me.joinParty'({ partyId }) {
     if (Party.collection.find({ _id: partyId }).count() === 0) throw new Meteor.Error('not-found');

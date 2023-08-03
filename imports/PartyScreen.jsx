@@ -25,6 +25,8 @@ const PartyScreen = () => {
       </ul>
 
       <button onClick={leaveParty}>Leave</button>
+      <button onClick={closeParty} className={}>Close</button>
+
 
       <PartyMap partyId={partyId} members={members} />
     </main>
@@ -32,5 +34,6 @@ const PartyScreen = () => {
 }
 
 const leaveParty = () => Meteor.callPromise('me.leaveParty');
+const closeParty = () => Meteor.callPromise('me.closeParty');
 
 export default PartyScreen;

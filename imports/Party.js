@@ -34,7 +34,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   'party.create'({ name }) {
-    const user = Meteor.user({ fields: { name: 1 } });
+    const user = Meteor.user({ fields: { username: 1 } });
     if (!user) throw new Meteor.Error('not-authorised');
 
     console.debug(user)
@@ -49,19 +49,15 @@ Meteor.methods({
   // TODO auto close the party when it is idle
 
   'party.close'({ partyId }) {
-    // We need to get the user first
     const user = Meteor.user({ fields: { _id: 1 } });
     if (!user) throw new Meteor.Error('not-authorised');
 
-    // Now let's find the party by its ID
-    const party = Party.collection.findOne({ _id: partyId }, { fields: { ownerId: 1 } });
-
+    const party = Party.collection.find({ _id: partyId }, { fields: { ownerId: 1 } })?.[0];
     if (!party) throw new Meteor.Error('not-found');
 
     // Checking if the user is the owner of the party
     if (party.ownerId !== user._id) throw new Meteor.Error('not-allowed');
 
-    // Now we are sure the user is the owner, so let's close the party
     return Party.collection.update({ _id: partyId, ownerId: user._id }, { $set: { open: false } });
   },
 

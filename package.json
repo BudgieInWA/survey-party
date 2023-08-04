@@ -4,7 +4,8 @@
   "scripts": {
     "start": "meteor run --port 8432 --exclude-archs web.browser.legacy",
     "build": "meteor build .build",
-    "deploy": "scp .build/survey-party.tar.gz party@party.budgieinwa.au && ssh -t 'unpack.sh'"
+    "deploy": "scp .build/survey-party.tar.gz 'party@party.budgieinwa.au:~/' && ssh party@party.budgieinwa.au -t '/home/party/unpack.sh'",
+    "restart": "ssh root@party.budgieinwa.au -t systemctl restart surveyparty"
   },
   "dependencies": {
     "@babel/runtime": "^7.20.7",

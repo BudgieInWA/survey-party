@@ -46,6 +46,7 @@ Meteor.methods({
       open: true,
     });
   },
+  // TODO auto close the party when it is idle
 
   'party.close'({ partyId }) {
     // We need to get the user first

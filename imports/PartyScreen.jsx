@@ -11,7 +11,7 @@ const PartyScreen = () => {
   const partyId = user?.currentPartyId;
 
   const partyLoading = useSubscribe('party', partyId);
-  const party = useFind(() => Party.collection.find(partyId), [partyId]);
+  const party = useFind(() => Party.collection.find(partyId), [partyId])?.[0];
   const membersLoading = useSubscribe('party.members', { partyId });
   const members = useFind(() => Party.members({ partyId }), [partyId]);
 

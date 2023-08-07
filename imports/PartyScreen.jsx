@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFind, useSubscribe, useTracker } from 'meteor/react-meteor-data';
-import { Spinner } from './lib/components';
+import { Button, Spinner } from './lib/components';
 
 import PartyMap from './PartyMap';
 import Party from './Party';
@@ -26,9 +26,9 @@ const PartyScreen = () => {
         {members.map(({ _id, username, icon }) => <li key={_id}>{icon} {username}</li>)}
       </ul>
 
-      <button onClick={leaveParty} className="btn btn-danger">Bail</button>
+      <Button variant="danger" action={leaveParty} >Bail</Button>
       {party?.ownerId === user._id &&
-        <button onClick={closeParty} className="btn btn-danger-outline">Close</button>
+        <Button variant="danger-outline" action={closeParty}>Close</Button>
       }
 
       <PartyMap partyId={partyId} members={members} />

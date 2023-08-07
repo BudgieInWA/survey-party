@@ -29,7 +29,7 @@ export const PartyMap = ({ partyId, members }) => {
   const addMark = ({ latLng }) => Meteor.callPromise('mark.createPoint', { partyId, coordinates: coords(latLng)});
 
   return (
-    <div>
+    <>
       {isLoading() && <Spinner />}
       <Button onClick={updatePosition}>Update Pos</Button>
       <MapContainer center={initialLocation} zoom={13} scrollWheelZoom={false} >
@@ -61,7 +61,7 @@ export const PartyMap = ({ partyId, members }) => {
           }
         )}
       </MapContainer>
-    </div>
+    </>
   );
 };
 

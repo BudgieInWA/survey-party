@@ -1,4 +1,26 @@
-.leaflet-container {
+
+html, body, #react-root, main {
+  height: 100%;
+}
+
+main {
+  // TODO grid
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  align-content: stretch;
+
+}
+
+main > .leaflet-container {
+  min-width: 100%;
+  min-height: 80vh;
+
+  flex: 0 0;
+  align-self: stretch;
+}
+
+main > h1 {
   width: 100%;
-  height: 500px;
 }

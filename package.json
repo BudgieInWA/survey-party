@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run --port 8432 --exclude-archs web.browser.legacy",
-    "build": "meteor build .build",
+    "build": "meteor build .build --debug",
     "deploy": "scp .build/survey-party.tar.gz 'party@party.budgieinwa.au:~/' && ssh party@party.budgieinwa.au -t '/home/party/unpack.sh'",
     "restart": "ssh root@party.budgieinwa.au -t systemctl restart surveyparty"
   },

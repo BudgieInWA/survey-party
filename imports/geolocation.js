@@ -8,4 +8,7 @@ const randomLocation = () => {
   return initialLocation.clone();
 };
 
+//TODO /** Gets the current device location after asking for permission. @returns {Promise<LatLng>} */
+//const currentLocation =...
+
 export default randomLocation;

@@ -32,6 +32,8 @@ export const PartyMap = ({ partyId, members }) => {
     <>
       {isLoading() && <Spinner />}
       <Button onClick={updatePosition}>Update Pos</Button>
+      {/*TODO location checkbox: when checked, start effect: updatePosition every second.*/}
+
       <MapContainer center={initialLocation} zoom={13} scrollWheelZoom={false} >
         <MouseGrid onClick={addMark} />
 

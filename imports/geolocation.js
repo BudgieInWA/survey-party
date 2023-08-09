@@ -8,7 +8,16 @@ const randomLocation = () => {
   return initialLocation.clone();
 };
 
-//TODO /** Gets the current device location after asking for permission. @returns {Promise<LatLng>} */
-//const currentLocation =...
+/** Gets the current device location after asking for permission. @returns {Promise<LatLng>} */
+const currentLocation = () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      position => resolve(new LatLng(position.coords.latitude, position.coords.longitude)),
+      reject
+    );
+  });
+};
 
-export default randomLocation;
+const bestEffortLocation = () => currentLocation().catch(async () => randomLocation());
+
+export default bestEffortLocation;

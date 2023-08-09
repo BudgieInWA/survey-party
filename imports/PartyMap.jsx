@@ -10,7 +10,6 @@ import { cellToBoundary, cellToLatLng, latLngToCell } from 'h3-js';
 
 import { Spinner } from '/imports/lib/components';
 
-import geolocation from './geolocation';
 import getIcon from './icons';
 import Marking from './Marking';
 
@@ -25,14 +24,11 @@ export const PartyMap = ({ partyId, members }) => {
   const isLoading = useSubscribe('party.marks', { _id: partyId });
   const marks = useFind(() => Party.marks({ _id: partyId }));
 
-  const updatePosition = () => Meteor.callPromise('me.updateLocation', { coordinates: coords(geolocation()) });
   const addMark = ({ latLng }) => Meteor.callPromise('mark.createPoint', { partyId, coordinates: coords(latLng)});
 
   return (
     <>
       {isLoading() && <Spinner />}
-      <Button onClick={updatePosition}>Update Pos</Button>
-      {/*TODO location checkbox: when checked, start effect: updatePosition every second.*/}
 
       <MapContainer center={initialLocation} zoom={13} scrollWheelZoom={false} >
         <MouseGrid onClick={addMark} />
